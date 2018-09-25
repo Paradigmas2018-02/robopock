@@ -1,3 +1,5 @@
+:- consult(request).
+
 %% Main menu of the simulation %%
 
 menu :- write("==== MENU ===="), nl,
@@ -10,7 +12,7 @@ menu :- write("==== MENU ===="), nl,
         read(Choice),
         option(Choice).
 
-option(1) :- write("Not Implemented"), !.
+option(1) :- new_game, !.
 option(2) :- write("Not Implemented"), !.
 option(3) :- write("Not Implemented"), !.
 option(4) :- write("Not Implemented"), !.
