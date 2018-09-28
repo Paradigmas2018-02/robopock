@@ -8,6 +8,16 @@
 djson:json(rank(X,Y)) -->
     json({ value: X, suit: Y }).
 
+djson: json(suit(X,Y)) -->
+    json({value: X, suit: Y}).
+
+djson:json(card(Rank, Suit)) -->
+    { Rank = rank(_,_) },
+    { Suit = suit(_,_) },
+    json({ suit: Suit
+         , rank: Rank
+}).
+
 deck :- http_open('http://localhost:3000/deck', In, []),
             json_read(In, Deck).
 
