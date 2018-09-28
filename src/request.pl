@@ -6,10 +6,10 @@
 
 
 djson:json(rank(X,Y)) -->
-    json({ value: X, suit: Y }).
+    json({ rname: X, rvalue: Y }).
 
 djson: json(suit(X,Y)) -->
-    json({value: X, suit: Y}).
+    json({sname: X, svalue: Y}).
 
 djson:json(card(Rank, Suit)) -->
     { Rank = rank(_,_) },
@@ -27,4 +27,5 @@ new_game :- http_open('http://localhost:3000/newgame', In, []),
 
 
 pick_card :- http_open('http://localhost:3000/pick', In, []),
-             json_read(In, Card).      
+             json_read(In, Card), json_term(Card2, Card), write(Card2).      
+
