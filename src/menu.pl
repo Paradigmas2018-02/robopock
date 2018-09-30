@@ -2,18 +2,23 @@
 
 %% Main menu of the simulation %%
 
-menu :- write("==== MENU ===="), nl,
+menu(Game) :- 
+        write("==== MENU ===="), nl,
         write("1 - New Game"), nl,
-        write("2 - Bet"), nl,
-        write("3 - Check"), nl,
-        write("4 - All In"), nl,
-        write("5 - Exit"), nl,
+        write("2 - Your Cards"), nl,
+        write("3 - Table Cards"), nl,
+        write("4 - Bet"), nl,
+        write("5 - Check"), nl,
+        write("6 - All In"), nl,
+        write("7 - Exit"), nl,
         write("=============="), nl,
         read(Choice),
-        option(Choice).
+        option(Choice, Game).
 
-option(1) :- new_game, !.
-option(2) :- write("Not Implemented"), !.
-option(3) :- write("Not Implemented"), !.
-option(4) :- write("Not Implemented"), !.
-option(5) :- write("Bye!"), !.
+option(1, CurGame) :- new_game(CurGame), menu(CurGame).
+option(2, CurGame) :- human_cards(CurGame), menu(CurGame).
+option(3, CurGame) :- table_cards2(CurGame), menu(CurGame).
+% option(4) :- write("Not Implemented"), !.
+% option(5) :- write("Bye!"), !.
+
+main :- menu(_).
