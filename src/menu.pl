@@ -15,7 +15,7 @@ menu(Game) :-
         read(Choice),
         option(Choice, Game).
 
-option(1, CurGame) :- new_game(CurGame), menu(CurGame).
+option(1, CurGame) :- new_game(Game), menu(Game).
 option(2, CurGame) :- human_cards(CurGame), menu(CurGame).
 option(3, CurGame) :- table_cards2(CurGame), menu(CurGame).
 % option(4) :- write("Not Implemented"), !.
