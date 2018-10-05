@@ -3,12 +3,11 @@
 :- consult(table).
 
 %% Main menu of the simulation %%
-
-menu(Game) :- 
+menu(Game) :- nl,
         write("==== MENU ===="), nl,
         write("1 - New Game"), nl,
         write("2 - Your Cards"), nl,
-        write("3 - Table Cards"), nl,
+        write("3 - Show Table"), nl,
         write("4 - Bet"), nl,
         write("5 - Check"), nl,
         write("6 - All In"), nl,
@@ -19,7 +18,7 @@ menu(Game) :-
 
 option(1, _) :- new_game(Game), menu(Game).
 option(2, CurGame) :- human_cards(CurGame), menu(CurGame).
-option(3, CurGame) :- table_cards2(CurGame), menu(CurGame).
+option(3, CurGame) :- show_table(CurGame), menu(CurGame).
 % option(4) :- write("Not Implemented"), !.
 % option(5) :- write("Bye!"), !.
 
