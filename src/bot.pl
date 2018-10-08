@@ -1,21 +1,22 @@
 :- consult(table).
+:- consult(request).
+
 
 bot(Game, Bot) :- Bot = Game.get(player1).
-hand_value(Hand, Value) :- Value = Hand.get(hvalue).
+hand_value(Hand, Value) :- Value = Hand.get(hvalue).get(rvalue).
 hand(Bot, Hand) :- Hand = Bot.get(phand).
 
-bot_bet(BetValue) :- nl, write("The bot has bet: "), write(BetValue), write(" tokens"), !.
+bot_bet(Game, BetValue) :- bot_bet_request(Game, BetValue), nl, write("The bot has bet: "), write(BetValue), write(" tokens"), !.
 
 
 bot_run :- nl, write("The bot abandoned this turn!"), nl, !.
 
 
-bot_turn(Game) :- 
+bot_turn(Game, BetValue, NewGame) :- 
         bot(Game, Bot),
         hand(Bot, Hand),
         pot(Game, Pot),
-        bet_value(Game, Bot, BetValue),
-        can_bet_then(can_bet(Hand, Pot, BetValue), bot_bet(BetValue), bot_run).
+        can_bet_then(can_bet(Hand, Pot, BetValue), bot_bet(NewGame, BetValue), bot_run).
 
 
 can_bet_then(CanBet, Bet, _) :- CanBet, !, Bet.
@@ -36,6 +37,7 @@ chance(Hand, Chance) :-
 
 
 %%% Naive probabilities %%%%
+may_win(1, 50).
 may_win(2, 91.524609).
 may_win(3, 98.5055).
 may_win(4, 99.2895).

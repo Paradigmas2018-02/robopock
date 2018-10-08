@@ -14,16 +14,23 @@ new_game(NewGame) :-
             human_cards(NewGame).
 
 
-pick_card :- http_open('http://localhost:3000/pick', In, []),
+pick_card(Card) :- http_open('http://localhost:3000/pick', In, []),
              json_read(In, Card).
 
-bet(CurGame) :- http_open('http://localhost:3000/bet?value=10', In, []),
-                json_read_dict(In, CurGame).
+
+human_bet_request(CurGame, Value) :- 
+        atom_concat('', Value, StringValue),
+        http_open([host('localhost'),
+            path('/human/bet'),
+            port(3000),
+            search([value=StringValue])], In, []),
+        json_read_dict(In, CurGame).
 
 
-
-    % http_open([host('localhost'),
-    %               path('/bet'),
-    %               port(3000),
-    %               search([value=10])
-    %               ], In, [post(json(Data))]),
+bot_bet_request(CurGame, Value) :- 
+        atom_concat('', Value, StringValue),
+        http_open([host('localhost'),
+            path('/bot/bet'),
+            port(3000),
+            search([value=StringValue])], In, []),
+        json_read_dict(In, CurGame).
