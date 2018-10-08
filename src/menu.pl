@@ -1,6 +1,7 @@
 :- consult(request).
 :- consult(human).
 :- consult(table).
+:- consult(utils).
 
 %% Main menu of the simulation %%
 menu(Game) :- nl,
@@ -19,7 +20,7 @@ menu(Game) :- nl,
 option(1, _) :- new_game(Game), menu(Game).
 option(2, CurGame) :- human_cards(CurGame), menu(CurGame).
 option(3, CurGame) :- show_table(CurGame), menu(CurGame).
-option(4, _) :- bet(CurGame), show_table(CurGame), menu(CurGame).
+option(4, _) :- place_bet(Value), bet(CurGame, Value), show_table(CurGame), menu(CurGame).
 option(7, _) :- write("Bye!"), !.
 
 main :- menu(_).
