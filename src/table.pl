@@ -12,8 +12,6 @@ pretty_cards([Head|Tail]) :- pretty_card(Head, PCard), write(PCard), pretty_card
 pretty_cards([_|_]):- true.
 
 
-
 show_table_cards(Game) :- table_cards(Game).
 
-
-
+bet_value(Game, Player, BetValue) :- pot(Game, Pot), BetValue = Pot - Player.get(payment).
