@@ -20,5 +20,8 @@ bet_value(Game, Player, BetValue) :- pot(Game, Pot), BetValue = Pot - Player.get
 check_then(Cond, Pick, _) :- Cond, !, Pick. 
 check_then(_, _, Win) :- Win. 
 
-check(Game, NewGame) :- check_then(false, pick_card(NewGame), winner(Winner)).
+check(Game, NewGame) :- 
+    length(Game.get(table).get(tcards), Len),
+    check_then(Len < 5, pick_card(NewGame), winner(NewGame)),
+    show_table(NewGame).
 
