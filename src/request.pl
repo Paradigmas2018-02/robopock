@@ -3,13 +3,16 @@
 :- use_module(library(http/http_json)).
 :- use_module(library(http/json_convert)).
 :- use_module(library(http/json)).
-
+:- consult(utils).
 :- consult(human).
 
-winner(NewGame) :- 
+winner(Game, NewGame) :- 
     http_open('http://localhost:3000/winner', In, []),
     json_read_dict(In, Winner),
-    nl, write("Winner: "), write(Winner.get(name)), nl,
+    nl, game_results(Game), nl, nl, 
+    write("---------"),nl,
+    write("Winner: "), write(Winner.get(name)), nl,
+    write("---------"),
     new_turn(NewGame).
 
 
