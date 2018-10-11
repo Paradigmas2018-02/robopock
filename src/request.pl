@@ -11,16 +11,22 @@ deck :- http_open('http://localhost:3000/deck', In, []),
 
 
 winner(Winner) :- http_open('http://localhost:3000/winner', In, []),
-                json_read_dict(In, Winner), write("Winner: "), write(Winner).
+                json_read_dict(In, Winner), write("Winner: "), write(Winner.get(name)).
+
 
 game(CurGame) :- http_open('http://localhost:3000/game', In, []),
                     json_read_dict(In, CurGame).
 
 
 new_game(NewGame) :- 
-            http_open('http://localhost:3000/newgame', In, []),
-            json_read_dict(In, NewGame), nl, nl, write("Game Started! "),
-            human_cards(NewGame).
+    http_open('http://localhost:3000/newgame', In, []),
+    json_read_dict(In, NewGame), nl, nl, write("Game Started! "),
+    human_cards(NewGame).
+
+
+new_turn(NewGame) :-
+    http_open('http://localhost:3000/newturn', In, []),
+    json_read_dict(In, NewGame).
 
 
 pick_card(NewGame) :- http_open('http://localhost:3000/pick', In, []),
