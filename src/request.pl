@@ -6,11 +6,6 @@
 
 :- consult(human).
 
-
-deck :- http_open('http://localhost:3000/deck', In, []),
-            json_read(In, Deck).
-
-
 winner(NewGame) :- 
     http_open('http://localhost:3000/winner', In, []),
     json_read_dict(In, Winner),
