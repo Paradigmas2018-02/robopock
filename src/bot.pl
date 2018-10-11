@@ -6,7 +6,11 @@ bot(Game, Bot) :- Bot = Game.get(player1).
 hand_value(Hand, Value) :- Value = Hand.get(hvalue).get(rvalue).
 hand(Bot, Hand) :- Hand = Bot.get(phand).
 
-bot_bet(Game, BetValue) :- bot_bet_request(Game, BetValue), nl, write("The bot has bet: "), write(BetValue), write(" tokens"), !.
+
+bot_bet(Game, BetValue) :- 
+    bet("player1", BetValue, Game), nl,
+    write("The bot has bet: "), write(BetValue), write(" tokens"), nl,
+    show_table(Game), !.
 
 
 bot_run :- nl, write("The bot abandoned this turn!"), nl, !.
