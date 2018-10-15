@@ -6,15 +6,6 @@
 :- consult(utils).
 :- consult(human).
 
-winner(Game, NewGame) :- 
-    http_open('http://localhost:3000/winner', In, []),
-    json_read_dict(In, Winner),
-    nl, game_results(Game), nl, nl, 
-    write("---------"),nl,
-    write("Winner: "), write(Winner.get(name)), nl,
-    write("---------"),
-    new_turn(NewGame).
-
 
 game(CurGame) :- http_open('http://localhost:3000/game', In, []),
                     json_read_dict(In, CurGame).
@@ -40,3 +31,14 @@ bet(Player, Value, NewGame) :-
     Data = json([player=Player, value=Value]),
     http_open('http://localhost:3000/bet', In, [post(json(Data))]),
     json_read_dict(In, NewGame).
+
+winner(Game, NewGame) :- 
+    http_open('http://localhost:3000/winner', In, []),
+    json_read_dict(In, Winner),
+    nl, game_results(Game), nl, nl, 
+    write("---------"),nl,
+    write("Winner: "), write(Winner.get(winnerPlayer).get(name)), nl,
+    nl, write("Hand: "), write(Winner.get(winnerHand).get(hvalue).get(rname)),
+    nl, pretty_cards(Winner.get(winnerHand).get(hcards)),
+    write("---------"),
+    new_turn(NewGame).
